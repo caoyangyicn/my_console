@@ -37,57 +37,9 @@ using v8::Value;
 
 
 static void Log(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
-    Local<Context> context = isolate->GetCurrentContext();
-
-    std::string str = "";
-    for(int i = 0;  i < args.Length(); i++) {
-        Local<Value> arg = args[i];
-        if(arg.IsEmpty()) {
-            str += "undefined";
-        } else if(arg->IsNull()) {
-            str += "null";
-        } else if(arg->IsTrue()) {
-            str += "true";
-        } else if(arg->IsFalse()) {
-            str += "false";
-        } else if(arg->IsInt32()) {
-            str += std::to_string(arg->Int32Value(context).ToChecked());
-        } else if(arg->IsNumber()) {
-            str += std::to_string(arg->NumberValue(context).ToChecked());
-        } else if(arg->IsString()) {
-            String::Utf8Value value(isolate, arg);
-            str += *value;
-        } else if(arg->IsArray()) {
-            Local<Array> array = Local<Array>::Cast(arg);
-            str += "[";
-            for(int i = 0; i < array->Length(); i++) {
-                if(i > 0) {
-                    str += ", ";
-                }
-                Local<Value> element = array->Get(context, i).ToLocalChecked();
-                if(element->IsInt32()) {
-                    str += std::to_string(element->Int32Value(context).ToChecked());
-                } else if(element->IsNumber()) {
-                    str += std::to_string(element->NumberValue(context).ToChecked());
-                } else if(element->IsString()) {
-                    String::Utf8Value value(isolate, element);
-                    str += *value;
-                }
-            }
-            str += "]";
-        } else if(arg->IsObject()) {
-            v8::Local<v8::String> tmp = v8::JSON::Stringify(context, arg).ToLocalChecked();
-            v8::String::Utf8Value value(isolate, tmp);
-            str += *value;
-        } 
-        
-    }
-    // 打印参数个数
-    int length = args.Length();
-    printf("Number of arguments: %d\n", length);
-    printf("content: %s\n", str.c_str());
-    
+  Isolate* isolate = args.GetIsolate();
+  v8::String::Utf8Value str(isolate, args[0]);
+  printf("%s\n", *str);
 }
 
 
