@@ -95,7 +95,8 @@
   V(watchdog)                                                                  \
   V(webstorage)                                                                \
   V(worker)                                                                    \
-  V(zlib)
+  V(zlib)                                                                      \
+  V(my_console)
 
 #define NODE_BUILTIN_BINDINGS(V)                                               \
   NODE_BUILTIN_STANDARD_BINDINGS(V)                                            \

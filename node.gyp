@@ -219,6 +219,7 @@
       'src/large_pages/node_large_page.h',
       'src/memory_tracker.h',
       'src/memory_tracker-inl.h',
+      'src/my_console.cc',
       'src/module_wrap.h',
       'src/node.h',
       'src/node_api.h',
